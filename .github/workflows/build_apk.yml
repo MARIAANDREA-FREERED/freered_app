@@ -14,11 +14,11 @@ jobs:
           channel: 'stable'
       - name: Instalar dependencias
         run: flutter pub get
-        working-directory: freered_app
+        working-directory: .
       - name: Compilar APK en Release
         run: flutter build apk --release
-        working-directory: freered_app
+        working-directory: .
       - uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: freered_app/build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
