@@ -12,13 +12,15 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - name: Instalar dependencias
-        run: flutter pub get
-        working-directory: .
-      - name: Compilar APK en Release
-        run: flutter build apk --release
-        working-directory: .
+      - name: Encontrar carpeta de Flutter y compilar
+        run: |
+          # Buscamos automáticamente dónde está el archivo pubspec.yaml
+          PROJECT_DIR=$(dirname $(find . -name "pubspec.yaml" -print -quit))
+          echo "Proyecto encontrado en: $PROJECT_DIR"
+          cd "$PROJECT_DIR"
+          flutter pub get
+          flutter build apk --release
       - uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: '**/build/app/outputs/flutter-apk/app-release.apk'
