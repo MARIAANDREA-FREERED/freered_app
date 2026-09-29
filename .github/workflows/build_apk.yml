@@ -6,18 +6,18 @@ on:
 
 jobs:
   build:
-  # Usamos macos-latest para compilar localmente dentro de la nube de forma ultra estable
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - name: Get dependencies and build APK
-        run: |
-          cd freered_app
-          flutter pub get
-          flutter build apk --release
+      - name: Install Dependencies
+        run: flutter pub get
+        working-directory: freered_app
+      - name: Build APK Release
+        run: flutter build apk --release
+        working-directory: freered_app
       - uses: actions/upload-artifact@v4
         with:
           name: app-release
